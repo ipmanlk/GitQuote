@@ -1,0 +1,32 @@
+#!/usr/bin/python3
+from requests import get
+from random import choice
+
+###################################################################
+##                        CONFIGURATION                          ##
+###################################################################
+
+# REDDIT PUBLIC API
+URL = "https://www.reddit.com/r/quotes.json?limit=20"
+
+###################################################################
+##                                                               ##
+###################################################################
+
+# sending a get request
+response = get(url=URL, headers={
+    "User-agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:74.0) Gecko/20100101 Firefox/74.0"})
+
+# extract data in json format
+data = response.json()
+
+# check for api errors
+if ("error" in data):
+    print(data)
+    exit()
+
+# select random quote
+random_quote = (choice(data["data"]["children"]))["data"]["title"]
+
+# show quote
+print("\n%s\n" % random_quote)
